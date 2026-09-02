@@ -1,0 +1,11 @@
+{
+  "name": "Abdullah Electronics ERP",
+  "short_name": "Abdullah ERP",
+  "description": "Business ERP, POS billing, inventory, and installment ledger management.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f766e",
+  "orientation": "any",
+  "icons": []
+}
