@@ -97,12 +97,9 @@ export function printInvoiceA4(sale: Sale, settings: Settings) {
 
   const plan = sale.installment_plan;
   const durationMonths = plan?.duration_months ?? 0;
-  const planAmount = plan?.installment_amount ?? 0;
-  const monthlyAmount = planAmount > 0
-    ? planAmount
-    : durationMonths > 0
-      ? sale.remaining_balance / durationMonths
-      : 0;
+  const monthlyAmount = durationMonths > 0
+    ? sale.remaining_balance / durationMonths
+    : 0;
   const nextDueDate = plan?.start_date ?? '';
 
   const statusBadge = isInstallment
@@ -374,12 +371,9 @@ export function printReceipt80mm(sale: Sale, settings: Settings) {
   const isInstallment = sale.sale_type === 'installment';
   const plan = sale.installment_plan;
   const durationMonths = plan?.duration_months ?? 0;
-  const planAmount = plan?.installment_amount ?? 0;
-  const monthlyAmount = planAmount > 0
-    ? planAmount
-    : durationMonths > 0
-      ? sale.remaining_balance / durationMonths
-      : 0;
+  const monthlyAmount = durationMonths > 0
+    ? sale.remaining_balance / durationMonths
+    : 0;
   const nextDueDate = plan?.start_date ?? '';
 
   const html = `
