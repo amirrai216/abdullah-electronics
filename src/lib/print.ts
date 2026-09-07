@@ -247,7 +247,7 @@ export function printInvoiceA4(sale: Sale, settings: Settings) {
   <!-- TITLE BAR -->
   <div class="title-bar">
     <div>
-      <h2>${isInstallment ? 'Installment Invoice' : 'Tax Invoice'}</h2>
+      <h2>${isInstallment ? 'Installment Invoice' : 'Sales Receipt'}</h2>
       <div class="doc-type">${isInstallment ? 'Installment Sale' : 'Cash Sale'} Document</div>
     </div>
     <div>${statusBadge}</div>
