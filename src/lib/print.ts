@@ -168,7 +168,7 @@ export function printInvoiceA4(sale: Sale, settings: Settings) {
   .items-table .row-num { color: #94a3b8; font-weight: 600; }
 
   /* ---------- TOTALS ---------- */
-  .totals-section { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+  .totals-section { display: flex; justify-content: flex-end; margin-bottom: 60px; }
   .totals-box { min-width: 300px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 16px; }
   .totals-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 12px; }
   .totals-row .label { color: #475569; font-weight: 500; }
@@ -188,7 +188,7 @@ export function printInvoiceA4(sale: Sale, settings: Settings) {
   .installment-row .value { color: #1e293b; font-weight: 700; }
 
   /* ---------- SIGNATURES ---------- */
-  .sign-section { display: flex; justify-content: space-between; margin-top: 24px; padding: 0 20px; }
+  .sign-section { display: flex; justify-content: space-between; margin-top: 60px; padding-top: 20px; padding-left: 20px; padding-right: 20px; }
   .sign-block { text-align: center; width: 200px; }
   .sign-line { border-top: 1px solid #475569; padding-top: 4px; font-size: 11px; font-weight: 600; color: #475569; }
 
@@ -220,7 +220,8 @@ export function printInvoiceA4(sale: Sale, settings: Settings) {
     .totals-row.grand .label { font-size: 12px; }
     .totals-row.grand .value { font-size: 15px; }
     .installment-box { padding: 6px 10px; margin-bottom: 6px; }
-    .sign-section { margin-top: 14px; }
+    .totals-section { margin-bottom: 40px; }
+    .sign-section { margin-top: 40px; padding-top: 16px; }
     .footer { margin-top: 8px; padding-top: 6px; }
   }
 </style></head><body>
