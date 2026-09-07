@@ -139,8 +139,9 @@ export function POSModule() {
     setCart((prev) =>
       prev.map((l, i) => {
         if (i !== idx) return l;
-        if (l.serialId) return l; // serial items are qty 1
-        const next = Math.min(Math.max(1, l.qty + delta), l.product.quantity);
+        if (l.serialId) return l;
+        const maxQty = l.product.quantity;
+        const next = Math.min(Math.max(1, l.qty + delta), maxQty);
         return { ...l, qty: next };
       })
     );
@@ -447,20 +448,27 @@ export function POSModule() {
                     {l.serialId ? (
                       <Badge variant="blue">1</Badge>
                     ) : (
-                      <div className="flex items-center gap-1 bg-white rounded-lg border border-slate-200">
-                        <button
-                          onClick={() => updateQty(i, -1)}
-                          className="p-1 text-slate-500 hover:text-teal-600"
-                        >
-                          <Minus size={14} />
-                        </button>
-                        <span className="w-6 text-center text-sm font-semibold">{l.qty}</span>
-                        <button
-                          onClick={() => updateQty(i, 1)}
-                          className="p-1 text-slate-500 hover:text-teal-600"
-                        >
-                          <Plus size={14} />
-                        </button>
+                      <div className="flex flex-col items-center gap-0.5">
+                        <div className="flex items-center gap-1 bg-white rounded-lg border border-slate-200">
+                          <button
+                            onClick={() => updateQty(i, -1)}
+                            disabled={l.qty <= 1}
+                            className="p-1 text-slate-500 hover:text-teal-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span className="w-6 text-center text-sm font-semibold">{l.qty}</span>
+                          <button
+                            onClick={() => updateQty(i, 1)}
+                            disabled={l.qty >= l.product.quantity}
+                            className="p-1 text-slate-500 hover:text-teal-600 disabled:opacity-30 disabled:cursor-not-allowed"
+                          >
+                            <Plus size={14} />
+                          </button>
+                        </div>
+                        {l.qty >= l.product.quantity && (
+                          <span className="text-[10px] text-amber-600 font-medium">Max stock</span>
+                        )}
                       </div>
                     )}
                     <span className="text-sm font-bold text-slate-800 w-20 text-right">
