@@ -57,6 +57,7 @@ export function UnifiedSaleModal({ open, onClose, onSaved }: UnifiedSaleModalPro
 
   // Installment details
   const [install, setInstall] = useState({
+    totalAmount: '',
     advance: '0',
     monthlyAmount: '0',
     months: '3',
@@ -80,7 +81,7 @@ export function UnifiedSaleModal({ open, onClose, onSaved }: UnifiedSaleModalPro
       setCart([]);
       setSaleType('cash');
       setSaleDate(new Date().toISOString().slice(0, 16));
-      setInstall({ advance: '0', months: '3', firstDueDate: todayISO() });
+      setInstall({ totalAmount: '', advance: '0', months: '3', firstDueDate: todayISO() });
       setError(null);
       setCompletedSale(null);
     }
@@ -97,8 +98,11 @@ export function UnifiedSaleModal({ open, onClose, onSaved }: UnifiedSaleModalPro
   }, [products, productSearch]);
 
   const subtotal = cart.reduce((s, l) => s + l.unitPrice * l.qty, 0);
-  const advanceVal = saleType === 'installment' ? parseFloat(install.advance) || 0 : subtotal;
-  const remaining = saleType === 'installment' ? Math.max(0, subtotal - advanceVal) : 0;
+  const grandTotal = saleType === 'installment'
+    ? (parseFloat(install.totalAmount) || subtotal)
+    : subtotal;
+  const advanceVal = saleType === 'installment' ? parseFloat(install.advance) || 0 : grandTotal;
+  const remaining = saleType === 'installment' ? Math.max(0, grandTotal - advanceVal) : 0;
   const months = saleType === 'installment' ? parseInt(install.months) || 0 : 0;
   const monthlyAmount = saleType === 'installment' && months > 0 ? remaining / months : 0;
 
@@ -203,7 +207,7 @@ export function UnifiedSaleModal({ open, onClose, onSaved }: UnifiedSaleModalPro
         customer_id: customer.id,
         subtotal,
         discount: 0,
-        total: subtotal,
+        total: grandTotal,
         advance_paid: advanceVal,
         remaining_balance: remaining,
         status: saleType === 'installment' ? 'ongoing' : 'completed',
@@ -471,7 +475,14 @@ export function UnifiedSaleModal({ open, onClose, onSaved }: UnifiedSaleModalPro
             <h3 className="text-sm font-bold text-amber-800">Installment Details</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
-                label="Advance Payment (Rs)"
+                label="Total Amount (PKR)"
+                type="number"
+                value={install.totalAmount}
+                onChange={(e) => setInstall({ ...install, totalAmount: e.target.value })}
+                placeholder={subtotal > 0 ? String(subtotal) : 'Enter total price'}
+              />
+              <Input
+                label="Advance Payment (PKR)"
                 type="number"
                 value={install.advance}
                 onChange={(e) => setInstall({ ...install, advance: e.target.value })}
